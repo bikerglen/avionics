@@ -58,7 +58,9 @@ void dacWrite16 (spi_inst_t *spi, uint cs_pin, uint16_t a);
 // globals
 //
 
-const uint LED_PIN = 25;
+const uint LED_RED_PIN = 18;
+const uint LED_GRN_PIN = 19;
+const uint LED_BLU_PIN = 20;
 
 // const uint SPI0_SCK_PIN  = 2;
 // const uint SPI0_MOSI_PIN = 3;
@@ -121,10 +123,16 @@ int main ()
 	// initialize stdio
     stdio_uart_init_full (uart1, 115200, 4, 5);
 	
-	// initialize led to off
-    gpio_init (LED_PIN);
-    gpio_set_dir (LED_PIN, GPIO_OUT);
-	gpio_put (LED_PIN, 0);
+	// initialize all leds to off
+    gpio_init (LED_RED_PIN);
+    gpio_init (LED_GRN_PIN);
+    gpio_init (LED_BLU_PIN);
+    gpio_set_dir (LED_RED_PIN, GPIO_OUT);
+    gpio_set_dir (LED_GRN_PIN, GPIO_OUT);
+    gpio_set_dir (LED_BLU_PIN, GPIO_OUT);
+	gpio_put (LED_RED_PIN, 1);
+	gpio_put (LED_GRN_PIN, 1);
+	gpio_put (LED_BLU_PIN, 1);
 
 	// initialize spi 0
     // gpio_init    (SPI0_CS0n_PIN);
@@ -233,10 +241,10 @@ int main ()
             // blihk led
             if (ledTimer == 0) {
                 // led on
-				gpio_put (LED_PIN, 1);
+				gpio_put (LED_RED_PIN, 0);
             } else if (ledTimer == 25) {
                 // led off
-				gpio_put (LED_PIN, 0);
+				gpio_put (LED_RED_PIN, 1);
             }
 
             // increment led timer counter, 1 second period
